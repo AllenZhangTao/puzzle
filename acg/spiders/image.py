@@ -20,19 +20,16 @@ class acgimages(scrapy.Spider):
 	MAX_CATCH_PAGES = 100
 	item = ImageItem()
 	def parse(self,response):
-		
 		#imgs = response.xpath('//a[@class="PKslhVT"]//div/@style').re(r'https://i.pximg.net/c/240x240/img-master/img/.+\.jpg')
 		#imgs = response.xpath('//a[@class="inn-archive__item__thumbnail__container inn-card_painting__item__thumbnail__container inn-card__thumbnail__container inn-card__thumbnail__container_painting"]//img/@src').re(r'https://static.acg12.com/uploads/.+\.jpg')
 		#aaa = re.findall(r'src="(.*?\.jpg)"',response.body.read())
-		 
 		#print(response.xpath('//article//div//a//img').re(r'data-src="(.*?\.jpg)"'))
 		imgs = response.xpath('//article//div//a//img').re(r'data-src="(.*?\.jpg)"')
 		usedImgs = []
 		for img in imgs:
 			if img not in usedImgs:
 				usedImgs.append(img)
- 
-		print(usedImgs)
+
 		self.item['url'] = "https://acg12.com/category/pixiv/page/%d" % self.page
 		#self.item['url'] = "https://www.pixiv.net/search.php?word=%E8%83%8C%E6%99%AF%20users%E5%85%A5%E3%82%8A&order=date_d&p=%d" % self.page
 		self.item['images'] = usedImgs
